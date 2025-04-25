@@ -3,19 +3,12 @@ name: Trigger Inputs
 on:
     workflow_dispatch:
         inputs:
-            terraform-apply:
-                description: 'Terraform Apply'
+            action:
+                description: 'Choose action to perform'
                 type: choice
-                options: [yes, no]
-                default: no
+                options: [apply, destroy]
+                default: apply
                 required: true
-            terraform-destroy:
-                description: 'Terraform Destroy'
-                type: choice
-                options: [yes, no]
-                default: no
-                required: true
-                    
 
 jobs:
     security-scan:
@@ -25,12 +18,12 @@ jobs:
               run: |
                 echo "Checking out code..."
 
-            - name:  Set up Python
+            - name: Set up Python
               run: |
                 echo "Setting up Python..."
                 echo "Python setup complete."
 
-            - name : Install dependencies
+            - name: Install dependencies
               run: |
                 echo "Installing dependencies..."
                 echo "Dependencies installed."
@@ -62,8 +55,9 @@ jobs:
               run: |
                 echo "Planning Terraform..."
                 echo "Terraform plan complete."
-    
+
     terraform-apply:
+        if: ${{ github.event.inputs.action == 'apply' }}
         needs: terraform-init-plan
         runs-on: ubuntu-latest
         steps:
@@ -80,8 +74,9 @@ jobs:
               run: |
                 echo "Applying Terraform..."
                 echo "Terraform apply complete."
-                
+
     terraform-destroy:
+        if: ${{ github.event.inputs.action == 'destroy' }}
         needs: terraform-init-plan
         runs-on: ubuntu-latest
         steps:
