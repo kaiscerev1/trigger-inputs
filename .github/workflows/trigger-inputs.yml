@@ -1,0 +1,100 @@
+name: Trigger Inputs
+
+on:
+    workflow_dispatch:
+        inputs:
+            terraform-apply:
+                description: 'Terraform Apply'
+                type: choice
+                options: [yes, no]
+                default: no
+                required: true
+            terraform-destroy:
+                description: 'Terraform Destroy'
+                type: choice
+                options: [yes, no]
+                default: no
+                required: true
+                    
+
+jobs:
+    security-scan:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              run: |
+                echo "Checking out code..."
+
+            - name:  Set up Python
+              run: |
+                echo "Setting up Python..."
+                echo "Python setup complete."
+
+            - name : Install dependencies
+              run: |
+                echo "Installing dependencies..."
+                echo "Dependencies installed."
+
+            - name: Run security scan
+              run: |
+                echo "Running security scan..."
+                echo "Security scan complete."
+
+    terraform-init-plan:
+        needs: security-scan
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              run: |
+                echo "Checking out code..."
+
+            - name: Set up Terraform
+              run: |
+                echo "Setting up Terraform..."
+                echo "Terraform setup complete."
+
+            - name: Initialize Terraform
+              run: |
+                echo "Initializing Terraform..."
+                echo "Terraform initialized."
+
+            - name: Plan Terraform
+              run: |
+                echo "Planning Terraform..."
+                echo "Terraform plan complete."
+    
+    terraform-apply:
+        needs: terraform-init-plan
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              run: |
+                echo "Checking out code..."
+
+            - name: Set up Terraform
+              run: |
+                echo "Setting up Terraform..."
+                echo "Terraform setup complete."
+
+            - name: Apply Terraform
+              run: |
+                echo "Applying Terraform..."
+                echo "Terraform apply complete."
+                
+    terraform-destroy:
+        needs: terraform-init-plan
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              run: |
+                echo "Checking out code..."
+
+            - name: Set up Terraform
+              run: |
+                echo "Setting up Terraform..."
+                echo "Terraform setup complete."
+
+            - name: Destroy Terraform
+              run: |
+                echo "Destroying Terraform..."
+                echo "Terraform destroy complete."
