@@ -8,10 +8,8 @@ on:
                 type: choice
                 options: [apply, destroy]
                 default: apply
-                required: true
-    push:
-        branches:
-            - main
+                required: false
+
 jobs:
     security-scan:
         runs-on: ubuntu-latest
