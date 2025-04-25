@@ -9,7 +9,9 @@ on:
                 options: [apply, destroy]
                 default: apply
                 required: true
-
+    push:
+        branches:
+            - main
 jobs:
     security-scan:
         runs-on: ubuntu-latest
