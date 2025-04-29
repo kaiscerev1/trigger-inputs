@@ -8,7 +8,7 @@ on:
                 type: choice
                 options: [apply, destroy]
                 default: apply
-                required: false
+                required: true
 
 jobs:
     security-scan:
